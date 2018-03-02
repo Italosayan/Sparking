@@ -35,8 +35,8 @@ println(addThenMultiply(1, 2)(3)) // 9
 */
 
 //Partial Application
-val adder(m: Int, n: Int) = m + n
-val add2 = adder(2, _:Int)
+val add = (x: Int, y: Int) => x + y
+val add2 = add(2, _:Int)
 
 
 //Curried functions
