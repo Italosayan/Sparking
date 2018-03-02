@@ -91,3 +91,20 @@ trait Car {
 trait Shiny {
   val shineRefraction: Int
 }
+
+
+//Object vs Class
+
+object A {
+  def twice(i: Int): Int = 2*i
+}
+//You can then call above method using A.twice(2).
+
+class A() {
+  def twice(i: Int): Int = 2 * i
+}
+
+val a = new A()
+a.twice(2)
+//You can see how this is redundant, as twice does not require any instance-specific data.
+
