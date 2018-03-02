@@ -1,8 +1,10 @@
 /*
 BASICS
 */
-val two = 1 + 1 // inmutable(python string)
-var name = "steve"// mutable
+val two = 1 + 1 
+// inmutable(python string)
+var name = "steve"
+// mutable
 
 println("Hello, mike")
 //Blocks - Combine expressions {}
@@ -17,7 +19,7 @@ val add = (x: Int, y: Int) => x + y
 println(add(1, 2)) // 3
 (x: Int) => x + 1// Anonymous Function
 
-//Method: Do not have types
+//Method
 def add(x: Int, y: Int): Int = x + y
 println(add(1, 2)) // 3
 
@@ -37,10 +39,12 @@ println(addThenMultiply(1, 2)(3)) // 9
 //Partial Application
 val add = (x: Int, y: Int) => x + y
 val add2 = add(2, _:Int)
+add2(10) // 12 
 
-
-//Curried functions
-val curriedAdd = (adder _).curried
+//Curried functions(So that I can define using a parameter)
+//Requires method: why?? TODO
+def add(x: Int, y: Int): Int = x + y
+val curriedAdd = (add _).curried
 val addTwo = curriedAdd(2)
 addTwo(4)// 6
 

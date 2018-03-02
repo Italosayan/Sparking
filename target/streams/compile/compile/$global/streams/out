@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/isayan/Desktop/SparkingProjects/Sparking/Hello.scala:4:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mval two = 1 + 1 [0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/isayan/Desktop/SparkingProjects/Sparking/Hello.scala:6:1: expected class or object definition[0m
+[0m[[0m[31merror[0m] [0m[0mvar name = "steve"[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
