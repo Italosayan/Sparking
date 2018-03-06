@@ -1,0 +1,82 @@
+Spark_book
+
+Spark Core consists on 2 APIs. Unstructured and Structured.
+
+Unstructured(Raw Objects):
+Resilient Distributed Datasets(RRDs)
+Accumulators
+Broadcast Variables
+
+Structured(Most used):
+DataFrames
+Datasets
+Spark SQL
+
+Outside Spark Core:
+MLlib
+GrapX:Graph Processing
+SparkR
+
+----o----
+
+Spark Applications have a driver(D) and executor(E) processes.
+
+D:
+Maintains information 
+Responds to User
+Distributes and Schedules work to Es.
+
+E:
+Executes Code
+Reporting back to D
+
+Cluster manager(YARN Mesos):
+Allocates resources
+Controls physical machines
+
+Starting Spark
+./bin/spark-shell on spark directory
+
+SparkSession <- Driver
+called spark on console
+
+Creating a column on driver:
+val myRange = spark.range(1000).toDF("number")
+number is colname
+It's a DF with one column containing 1000 rows with values from 0 to 999.
+No list of numbers only a type signature.
+(Distributed Collection)
+
+DataFrames:
+The list of columns and types are a schema. Just like in SQL.
+A SparkDataFrame can span potentially thousands of computers.
+DataFrame is the simplest distributed collection.
+
+Characteristics of all Datasets,dataframes, and RDDs
+	Partitions:
+	Chunck of data on a physical machine.
+	errand - computation and data
+	(in DF you dont manipulate partitions)
+
+	Transformations:
+	Change a DF to the one you want.
+	For example: val divisby2 = myRange.where("number % 2 = 0")
+	No computation is executed
+	
+	Lazy Evaluation:
+	Build a plan of transformations
+	
+	Actions:
+	.count() on divisby2 returns 500. Some computation
+	Three kinds: view data in console, collect that in R|Python|Scala, and write to output data sources
+
+	Spark has a UI: localhost:4040
+	A Spark job is a set of transformations triggered by an individual action.
+
+A Basic Transformation Data Flow
+
+val flightData2015 = spark.read.json('PATH') One way to read
+flightData2015.take(2)
+flightData2015.explain() <- Physical Plan (Just read in this case)
+flightData2015.show() <- to see data
+ 

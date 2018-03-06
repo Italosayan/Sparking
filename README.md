@@ -7,3 +7,6 @@ https://spark.apache.org/docs/latest/rdd-programming-guide.html
 
 Scala Resource:
 https://twitter.github.io/scala_school/basics.html
+
+Dataframe documentation:
+https://spark.apache.org/docs/2.1.0/sql-programming-guide.html
