@@ -75,8 +75,9 @@ Characteristics of all Datasets,dataframes, and RDDs
 
 A Basic Transformation Data Flow
 
-val flightData2015 = spark.read.json('PATH') One way to read
+val flightData2015 = spark.read.json(PATH) One way to read
 flightData2015.take(2)
 flightData2015.explain() <- Physical Plan (Just read in this case)
 flightData2015.show() <- to see data
- 
+lineage(?) ancestors and transformations
+val flightData2015 = spark.read.option("inferSchema","true").option("header","true").csv(PATH) 
