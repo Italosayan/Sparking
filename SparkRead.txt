@@ -74,10 +74,35 @@ Characteristics of all Datasets,dataframes, and RDDs
 	A Spark job is a set of transformations triggered by an individual action.
 
 A Basic Transformation Data Flow
-
+val flightData2015 = spark.read.json("databook/Spark-The-Definitive-Guide/data/flight-data/json/2015-summary.json")
 val flightData2015 = spark.read.json(PATH) One way to read
 flightData2015.take(2)
 flightData2015.explain() <- Physical Plan (Just read in this case)
 flightData2015.show() <- to see data
 lineage(?) ancestors and transformations
-val flightData2015 = spark.read.option("inferSchema","true").option("header","true").csv(PATH) 
+val flightData2015 = spark.read.option("inferSchema","true").option("header","true").csv(PATH)
+
+Dataframes and SQL
+To create a view:
+flightData2015.createOrReplaceTempView("flight_data_2015")
+
+Using SQL:
+val sqlWay = spark.sql(""" SELECT DEST_COUNTRY_NAME, count(1) FROM flightData2015 GROUP BY DEST_COUNTRY_NAME """)
+Using spark:
+val DataFrameWay = flightData2015.groupBy('DEST_COUNTRY_NAME').count()
+Same thing under the hood.
+
+Maximun flight
+
+import org.apache.spark.sql.functions.max
+flightData2015.select(max("count")).take(1)
+SQL: spark.sql("SELECT max(count) from flight_data_2015").take(1)
+
+More complex:
+flightData2015
+.groupBy("DEST_COUNTRY_NAME")
+.sum("count")
+.withColumnRenamed("sum(count)", "destination_total")
+.sort(desc("destination_total"))
+.limit(5)
+.collect()
