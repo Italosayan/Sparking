@@ -68,6 +68,7 @@ Characteristics of all Datasets,dataframes, and RDDs
 	
 	Actions:
 	.count() on divisby2 returns 500. Some computation
+	.collect()
 	Three kinds: view data in console, collect that in R|Python|Scala, and write to output data sources
 
 	Spark has a UI: localhost:4040
@@ -106,3 +107,13 @@ flightData2015
 .sort(desc("destination_total"))
 .limit(5)
 .collect()
+
+CHAPTER 02!!Structured API
+
+Typed and Untyped API
+Dataframe or untyped API goes accross prog. languages. AKA spark types. no native types. Sub of typed
+Dataset API or typed API only works in JVM. Scala and java. Define your own types. Types are checked at compile time
+spark.range(500) --> org.apache.spark.sql.Dataset[Long] = [id: bigint]
+Each record of a dataFrame is of type Row
+TYPE TABLE
+
