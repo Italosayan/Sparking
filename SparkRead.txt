@@ -108,7 +108,7 @@ flightData2015
 .limit(5)
 .collect()
 
-CHAPTER 02!!Structured API
+CHAPTER 02!!Structured API-> no classes. Tables or dataframes
 
 Typed and Untyped API
 Dataframe or untyped API goes accross prog. languages. AKA spark types. no native types. Sub of typed
@@ -116,4 +116,40 @@ Dataset API or typed API only works in JVM. Scala and java. Define your own type
 spark.range(500) --> org.apache.spark.sql.Dataset[Long] = [id: bigint]
 Each record of a dataFrame is of type Row
 TYPE TABLE
+Columns represent types
+spark.range(10).collect() --> native scala(encoders)
+spark.range(10).toDF().collect() --> spark type
 
+Overview of Spark Execution
+1. Write DataFrame/Dataset/SQL Code
+2. If valid code, SPark converts this to a Logical Plan(using catalyst optimizer)
+3. Spark transforms to physical plan(taking DataFrames and SQL and complites them to RDD. Creates different execution strategies and chooses.
+4. excecutes plan on clusters.  At runtime, Java bytecode is generate to remove whole tasks.
+Catalyst Optimizer creates the plan (CRAZY)ca
+Pushes down predicates and selections
+
+
+CHAPTER 03!! Basic Structured Operations
+
+Function appendix:
+./bin/spark-shell
+Transformations
+	spark.read.json(PATH) One way
+	val myRange = spark.range(1000).toDF("number")
+	val divisby2 = myRange.where("number % 2 = 0")
+	.groupBy('DEST_COUNTRY_NAME')
+	.withColumnRenamed("old","new")
+	.sort(desc('col1'))
+	.limit()
+	.join()
+Actions
+	.count() on divisby2 returns 500
+	.collect() - Return all values of DF
+	.show() - like str in R
+	flightData2015.select(max("number_of_flights")).take(1)
+	.take(2) - like head
+	.select(col1,col2)
+Extra
+	flightData2015.explain( ) -Physical Plan
+	flightData2015.createOrReplaceTempView("flight_data_2015") -Create SQL view
+	SPARK UI: localhost:4040
