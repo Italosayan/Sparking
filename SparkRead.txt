@@ -125,13 +125,31 @@ Overview of Spark Execution
 2. If valid code, SPark converts this to a Logical Plan(using catalyst optimizer)
 3. Spark transforms to physical plan(taking DataFrames and SQL and complites them to RDD. Creates different execution strategies and chooses.
 4. excecutes plan on clusters.  At runtime, Java bytecode is generate to remove whole tasks.
-Catalyst Optimizer creates the plan (CRAZY)ca
+Catalyst Optimizer creates the plan (CRAZY)
 Pushes down predicates and selections
 
 
 CHAPTER 03!! Basic Structured Operations
+The partitioning of the DataFrame define the physical distribution across clusters
+Partitioning scheme defines if its on values in a certain column orn non deterministically
+A schema is a StructType made of StructFields
+val myManualSchema = new StructType(Array(
+	new StructField("DEST_COUNTRY_NAME", StringType, true),
+	new StructField("ORIGIN_COUNTRY_NAME", StringType, true),
+	new StructField("count", LongType, false)
+WE CANNOT SIMPLY SET TYPES VIA THE PER LANGUAGE TYPE BECAUSE SPARK MAINTAINS ITS OWN TYPE INFO
 
+To Spark a column just represents a logical(?) value computed per row though an expression
+To create a column
+
+col("COLNAME")
+Columns are not resolved till we compare a name with those we are maintaining in the catalog
+df.col("COLNAME") (no need to be resolved on analyzer phase)
+EXPRESSION: set of transformations. like a function that takes COLNAMES resolves them to create a single value
 Function appendix:
+Cool Spark stuff:
+$"myColumn"
+'myColumn
 ./bin/spark-shell
 Transformations
 	spark.read.json(PATH) One way
@@ -152,4 +170,6 @@ Actions
 Extra
 	flightData2015.explain( ) -Physical Plan
 	flightData2015.createOrReplaceTempView("flight_data_2015") -Create SQL view
+	flightData2015.printSchema()
+	df.schema()
 	SPARK UI: localhost:4040
