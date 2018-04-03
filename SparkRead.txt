@@ -146,6 +146,18 @@ col("COLNAME")
 Columns are not resolved till we compare a name with those we are maintaining in the catalog
 df.col("COLNAME") (no need to be resolved on analyzer phase)
 EXPRESSION: set of transformations. like a function that takes COLNAMES resolves them to create a single value
+example of expression: expr('(((someCol + 5 )*200)-6)< otherCol" ')
+Create logic tree similar to SQL. SEE IMAGE IN BOOK
+You have to set the types in scala
+
+there are 4 types of dataframe transformations
+We can add rows or columns
+We can remove rows or columns
+We can transform a row into a column
+We can change the order of rows based on the values in columns
+
+Creating DF
+remember to createOrReplaceTempView("dfTable")
 Function appendix:
 Cool Spark stuff:
 $"myColumn"
@@ -160,6 +172,7 @@ Transformations
 	.sort(desc('col1'))
 	.limit()
 	.join()
+	vak myRow = Row("Hello", null, 1, flase)
 Actions
 	.count() on divisby2 returns 500
 	.collect() - Return all values of DF
@@ -167,9 +180,11 @@ Actions
 	flightData2015.select(max("number_of_flights")).take(1)
 	.take(2) - like head
 	.select(col1,col2)
+	.firt()
 Extra
 	flightData2015.explain( ) -Physical Plan
 	flightData2015.createOrReplaceTempView("flight_data_2015") -Create SQL view
 	flightData2015.printSchema()
 	df.schema()
 	SPARK UI: localhost:4040
+	.columns to see al columns
