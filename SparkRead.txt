@@ -158,6 +158,53 @@ We can change the order of rows based on the values in columns
 
 Creating DF
 remember to createOrReplaceTempView("dfTable")
+import Row
+import Types
+
+val myManualSchema = new StructType(Array(
+	new StructField("some", StringType, true),
+	new StructField("col", StringType, true),
+	new StructField("names", LongType, false)))
+
+val myRows = Seq(Row("Hello", null, 1L))
+val myRDD = spark.sparkContext.parallelize(myRows)
+
+val myDF = spark.createDataFrame(myRDD, myManualSchema)
+myDF.show()
+
+Two Useful Methods
+select->columns
+df.select("colname","colname2").show(2)
+selectExpr->strings "DEST_COUNTRY_NAME as newname"
+df.selectExpr("*", "(DEST_COUNTRY_NAME = ORIGIN_COUNTRY_NAME) as withinCountry")
+
+Average of count column. Distinct destinations
+flightData2015.selectExpr("avg(count)", "count(distinct(DEST_COUNTRY_NAME))").show()
+more functions on th org.apache.spark.sql.functions
+
+Passing a value to compare to
+imoprt org.apache.spark.sql.functions.lit
+df.select(expr("*"), lit(1).as("something")).show(2)
+
+Adding Columns
+df.withColumn("numberOne",lit(1)).show(2)
+df.withColumn("same", expr("ORIGIN_COUNTRY_NAME == DEST_COUNTRY_NAME")).show(2)
+Rename: df.WithColumn("Destination",df.col("DEST_COUNTRY_NAME")).columns
+Other rename: df.withColumnRenamed("DEST_COUNTRY_NAME","dest"),columns
+`` have to be used when refering to a column in an expression
+
+Drop: df.drop("ORIGIN_COUNTRY_NAME").columns
+dfWithLongColName.drop("ORIGIN_COUNTRY_NAME", "DEST_COUNTRY_NAME")
+Casting:
+df.withColumn("count",col("count").cast("int")).printSchema()
+filtering columns:
+df.where(col("count")<2)
+.where(col("ORIGIN_COUNTRY_NAME") =!= "Croatia").show(2)
+=!= distinct to
+
+To get unique rows
+df.select("colname").distinct().count()
+
 Function appendix:
 Cool Spark stuff:
 $"myColumn"
